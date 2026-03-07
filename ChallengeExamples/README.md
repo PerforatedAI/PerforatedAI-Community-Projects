@@ -9,3 +9,7 @@ Feel free to also submit your own projects to this folder if it is a data modali
 - Llama-factory - working on a Qwen use case
 
     git clone https://github.com/RorryB/LlamaFactory-perforated.git
+
+-PyG gregriever
+
+    git clone https://github.com/RorryB/gretriever-stark-prime-perforated.git

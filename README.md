@@ -6,3 +6,6 @@ This repo is to for folks who are building with Perforated AI to collaborate.  P
 
 ## Challenge Projects
 These are projects the Perforated AI team is working on.  Anyone is welcome to review and contribute.
+
+## Experimentation
+These are projects where the Perforated AI team is trying validate or gather data about specific use cases, models, or theoretical applications
