@@ -9,10 +9,9 @@ python train_from_hf_sweep_prune.py --hf-repo-id perforated-ai/resnet-18-perfora
 #Current experiments
 ython train_from_hf_prune.py --hf-repo-id tv/mobilenet_v3_large --dataset food101 --target-params 2500000 --model-type mobilenet --prune-method ln --prune-scope local --device cuda:0 --data-path ./data
 
-python train_from_hf_prune.py --hf-repo-id tv/mnasnet0_75 --dataset food101 --target-params 2200000 --model-type mobilenet --prune-method ln --prune-scope local --device cuda:1 --data-path ./data
+python train_from_hf_prune.py --hf-repo-id tv/mnasnet0_75 --dataset food101 --target-params 2200000 --model-type mobilenet --prune-method ln --prune-scope local --device cuda:0 --data-path ./data &
 
-python train_from_hf_prune.py --hf-repo-id tv/efficientnet_b1 --dataset food101 --target-params 5300000 --model-type mobilenet --prune-method ln --prune-scope local --device cuda:2 --data-path ./data
-
+python train_from_hf_prune.py --hf-repo-id tv/efficientnet_b1 --dataset food101 --target-params 5300000 --model-type mobilenet --prune-method ln --prune-scope local --device cuda:1 --data-path ./data &
 '''
 
 import datetime
