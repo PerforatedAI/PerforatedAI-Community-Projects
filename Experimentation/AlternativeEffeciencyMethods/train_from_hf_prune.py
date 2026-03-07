@@ -4,6 +4,15 @@ Training script that loads models from HuggingFace and applies iterative pruning
 Usage:
 python train_from_hf_sweep_prune.py --hf-repo-id microsoft/resnet-18 --dataset flowers102 --target-params 5000000
 python train_from_hf_sweep_prune.py --hf-repo-id perforated-ai/resnet-18-perforated --dataset pets --target-params 3000000 --prune-scope local
+
+
+#Current experiments
+ython train_from_hf_prune.py --hf-repo-id tv/mobilenet_v3_large --dataset food101 --target-params 2500000 --model-type mobilenet --prune-method ln --prune-scope local --device cuda:0 --data-path ./data
+
+python train_from_hf_prune.py --hf-repo-id tv/mnasnet0_75 --dataset food101 --target-params 2200000 --model-type mobilenet --prune-method ln --prune-scope local --device cuda:1 --data-path ./data
+
+python train_from_hf_prune.py --hf-repo-id tv/efficientnet_b1 --dataset food101 --target-params 5300000 --model-type mobilenet --prune-method ln --prune-scope local --device cuda:2 --data-path ./data
+
 '''
 
 import datetime
@@ -492,8 +501,8 @@ def load_model_from_hf(hf_repo_id, num_classes, model_type='resnet'):
     # For mobilenet, load directly from torchvision to avoid HuggingFace wrapper issues
     if model_type == 'mobilenet':
         model_name = hf_repo_id.split('/')[-1].replace('-', '_')
-        print(f"\nLoading mobilenet directly from torchvision: {model_name}")
-        model = torchvision.models.get_model(model_name, weights='IMAGENET1K_V2')
+        print(f"\nLoading model directly from torchvision: {model_name}")
+        model = torchvision.models.get_model(model_name, weights='DEFAULT')
         print(f"Successfully loaded torchvision model")
         # Replace final classifier layer
         if isinstance(model.classifier, nn.Sequential):
@@ -830,9 +839,10 @@ def main():
     parser.add_argument("--model-type", default="resnet", type=str,
                        choices=['resnet', 'mobilenet'],
                        help=("Architecture family being pruned. "
-                             "'mobilenet': lower patience (10 epochs), no LR-restart cycle, "
-                             "larger prune steps (10-30%%) — shows accuracy degradation faster. "
-                             "'resnet': original settings (patience=100, LR-restart first, 5-20%% steps)."))
+                             "'mobilenet': loads directly from torchvision using the last component of "
+                             "--hf-repo-id as the model name (e.g. tv/mobilenet_v3_large, tv/mnasnet1_0, "
+                             "tv/efficientnet_b0). Uses conservative pruning settings. "
+                             "'resnet': loads from HuggingFace, patience=100, LR-restart first, 5-20%% steps."))
     
     args = parser.parse_args()
     
